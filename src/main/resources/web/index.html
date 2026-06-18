@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Threads - Mercado Medieval</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="topo">
+        <div>
+            <p class="tag">POO + Sistemas Operacionais</p>
+            <h1>Painel das Threads</h1>
+            <p class="subtitulo">Interface somente leitura para mostrar os artesãos rodando em threads e usando recursos compartilhados.</p>
+        </div>
+        <div class="acoes-topo">
+            <button id="btnReset" class="botao secundario">Reiniciar demonstração</button>
+            <button id="btnSimular" class="botao principal">Iniciar threads</button>
+        </div>
+    </header>
+
+    <main class="layout">
+        <section class="card destaque">
+            <div class="card-titulo">
+                <div>
+                    <h2>Resumo da simulação</h2>
+                    <p class="texto-card">Os dados são fixos. Aqui você só acompanha o funcionamento do backend e das threads.</p>
+                </div>
+                <span id="avisoRodando" class="pill pulse escondido">Threads rodando</span>
+            </div>
+
+            <div class="resumo-grid">
+                <div>
+                    <span id="totalArtesaos">0</span>
+                    <p>Artesãos</p>
+                </div>
+                <div>
+                    <span id="totalThreads">0</span>
+                    <p>Threads criadas</p>
+                </div>
+                <div>
+                    <span id="totalPedidos">0</span>
+                    <p>Pedidos pendentes</p>
+                </div>
+                <div>
+                    <span id="statusSimulacao">Parada</span>
+                    <p>Status geral</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card lista-grande">
+            <div class="card-titulo">
+                <h2>Status das threads</h2>
+                <span id="threadsFinalizadas" class="pill">0 finalizadas</span>
+            </div>
+            <div id="listaThreads" class="lista threads-grid"></div>
+        </section>
+
+        <section class="card lista-grande">
+            <h2>Artesãos e pedidos</h2>
+            <div id="listaArtesaos" class="lista"></div>
+        </section>
+
+        <section class="card lista-grande">
+            <h2>Recursos compartilhados</h2>
+            <div id="listaRecursos" class="lista recursos-grid"></div>
+        </section>
+
+        <section class="card logs-card">
+            <div class="card-titulo">
+                <h2>Console da simulação</h2>
+                <span class="pill">backend Java</span>
+            </div>
+            <div id="logs" class="logs"></div>
+        </section>
+    </main>
+
+    <div id="toast" class="toast escondido"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

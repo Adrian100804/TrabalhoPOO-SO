@@ -53,7 +53,7 @@ public class Artesao implements Runnable {
             if (pontuacaoAtual > melhorPontuacao) { // se o pedido atual tiver a pontuação maior, ele vira o melhor pedido
                 melhorPedido = pedido;
             }
-        }
+        } // se o pedido tiver o msm nivel de priorida ele desempata pelo tempo de espera que é calculado pelo getTempoEspera
 
         this.pedidos.remove(melhorPedido);// o pedido escolhido sai da lista, ele so sai da lista pq ele sera executado
         return melhorPedido; // o artesão recebe o melhor pedido para executar
@@ -68,7 +68,7 @@ public class Artesao implements Runnable {
 
         boolean conseguiuReservarTodos = true; // assume que todos os recursos foram reservados, mas, se falhar muda para falso
 
-        for (Recurso recurso : pedido.getRecursosNecessarios()) {
+        for (Recurso recurso : pedido.getRecursosNecessarios()) { // o for i tenta reservar os recursos se ele conseguir ele armazena na lista dos recursos reservados
             if (recurso.tentarReservar()) {
                 recursosReservados.add(recurso);
             } else {
@@ -77,12 +77,12 @@ public class Artesao implements Runnable {
             }
         }
 
-        if (!conseguiuReservarTodos) {
+        if (!conseguiuReservarTodos) { // caso ele não consiga reservar os recursos ele os libera evitando o deadlock
             for (Recurso recurso : recursosReservados) {
                 recurso.liberar();
             }
 
-            pedido.aumentarTempoEspera();
+            pedido.aumentarTempoEspera(); // e o pedido aumenta o tempo de espera com isso aumentando a prioridade do pedido
 
             System.out.println(this.nome + " não conseguiu executar o pedido agora: " + pedido.getNome());
 
@@ -92,23 +92,23 @@ public class Artesao implements Runnable {
         try {
             System.out.println(this.nome + " iniciou o pedido: " + pedido.getNome());
 
-            Thread.sleep(pedido.getTempoExecucao());
+            Thread.sleep(pedido.getTempoExecucao()); // aqui faz a thread parar por um tempo mostrando que ele está trabalhando
 
             for (Recurso recurso : recursosReservados) {
-                recurso.registrarUso();
+                recurso.registrarUso(); //registra o uso do recurso para fazer a manutenção posteriormente
             }
 
             System.out.println(this.nome + " terminou o pedido: " + pedido.getNome());
 
             return true;
 
-        } catch (InterruptedException e) {
+        } catch (InterruptedException e) { //no catch ele trata quando o sleep é interrompida e retorna falso
             Thread.currentThread().interrupt();
 
             System.out.println(this.nome + " Execução interrompida para o artesão: " + pedido.getNome());
             return false;
 
-        } finally {
+        } finally { // por fim no final da execução do pedido o recurso é liberado
             for (Recurso recurso : recursosReservados) {
                 recurso.liberar();
             }

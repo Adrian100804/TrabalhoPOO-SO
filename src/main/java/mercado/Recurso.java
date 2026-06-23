@@ -10,13 +10,13 @@ public class Recurso extends Thread {
     private boolean emManutencao;
     private int quantidadeUsos;
 
-    private static final int LIMITE_USOS_MANUTENCAO = 3;
-    private static final int TEMPO_MANUTENCAO = 1000;
+    private static final int LIMITE_USOS_MANUTENCAO = 3; // define que o limite de uso para a manutenção seja 3 
+    private static final int TEMPO_MANUTENCAO = 1000; // define um tempo de espera para menuteção de 1 segundo
 
     public Recurso(String nome, TipoRecurso tipo) {
         this.nome = nome;
         this.tipo = tipo;
-        this.lock = new ReentrantLock(true);
+        this.lock = new ReentrantLock(true); // o reentrandolock ele trata a parte de sincronização, faz com que apenas uma thread por vez reserve o recurso necessario
         this.emManutencao = false;
         this.quantidadeUsos = 0;
     }
@@ -81,7 +81,7 @@ public class Recurso extends Thread {
         }
     }
 
-    public boolean estaDisponivel() {
+    public boolean estaDisponivel() { 
         return !this.emManutencao && !this.lock.isLocked();
     }
 

@@ -42,7 +42,7 @@ public class Pedido {
         this.tempoEspera = tempoEspera;
     }
 
-    public void aumentarTempoEspera() {
+    public void aumentarTempoEspera() { // nesse metódo ele evita o starvation, fazendo com que os pedidos de menor prioridade vá aumentando o tempo de espera e com isso sua prioridade aumento, fazendo com que ele uma hora seja executado porque sua prioridade aumentou
         this.tempoEspera = this.tempoEspera + 1;
     }
 

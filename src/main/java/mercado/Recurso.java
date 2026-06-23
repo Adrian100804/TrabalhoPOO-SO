@@ -41,48 +41,48 @@ public class Recurso extends Thread {
         this.emManutencao = emManutencao;
     }
 
-    public boolean tentarReservar() {
-        if (this.emManutencao) {
+    public boolean tentarReservar() { 
+        if (this.emManutencao) { // ele tenta reservar o recurso se ele estiver manuteção ele quebra o laço 
             return false;
         }
 
-        return this.lock.tryLock();
+        return this.lock.tryLock(); // o trylock serve para reservar o recurso sem travar a thread para sempre 
     }
 
     public void liberar() {
         if (this.lock.isHeldByCurrentThread()) {
-            this.lock.unlock();
+            this.lock.unlock(); // o unlock libera o recurso para a fila novamente
         }
     }
 
-    private void realizarManutencaoAutomatica() {
+    private void realizarManutencaoAutomatica() { // realiza a manutenção automatica quando atinge uma certa quantidade uso
         this.emManutencao = true;
 
         System.out.println(this.nome + " entrou em manutenção.");
 
         try {
-            Thread.sleep(TEMPO_MANUTENCAO);
+            Thread.sleep(TEMPO_MANUTENCAO); // a thread para a execução com o tempo definido em 1 segundo 
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             System.out.println(" Manutenção interrompida em: " + this.nome);
         }
 
-        this.quantidadeUsos = 0;
+        this.quantidadeUsos = 0; // a quantidade é zerada novamente
         this.emManutencao = false;
 
         System.out.println(this.nome + " saiu da manutenção.");
     }
 
-    public void registrarUso() {
+    public void registrarUso() { // toda vez que o recurso é usado ele adiciona 1 na quantidade de uso 
         this.quantidadeUsos = this.quantidadeUsos + 1;
 
-        if (this.quantidadeUsos >= LIMITE_USOS_MANUTENCAO) {
+        if (this.quantidadeUsos >= LIMITE_USOS_MANUTENCAO) { // se a quantidade de uso chegar o limite ele entra em manutenção automatica
             this.realizarManutencaoAutomatica();
         }
     }
 
-    public boolean estaDisponivel() { 
-        return !this.emManutencao && !this.lock.isLocked();
+    public boolean estaDisponivel() { // ele verifica se o recurso esta disponivel para uso
+        return !this.emManutencao && !this.lock.isLocked(); // essa linha quer dizer que o codigo não esta em manutenção e se não estiver sendo usado por outra thread
     }
 
     @Override

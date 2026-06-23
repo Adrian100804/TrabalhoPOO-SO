@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Mercado {
 
-    private List<Artesao> artesaos;
-    private List<Recurso> recursos;
+    private List<Artesao> artesaos; //lista de artesãos
+    private List<Recurso> recursos; //lista de recursos
 
     public Mercado() { //construtor completo onde vai começar com duas listas vazias
         this.artesaos = new ArrayList<>();
@@ -32,7 +32,7 @@ public class Mercado {
     public void mostrarRecursos() { //metodo percorre a lista recurso e imprime cada um
         System.out.println("\n--- Recursos do Mercado ---");
 
-        for (Recurso recurso : recursos) {
+        for (Recurso recurso : recursos) { // percorre o vetor de recursos e mostra os recursos
             System.out.println(recurso);
         }
     }
@@ -50,7 +50,7 @@ public class Mercado {
 
         for(Thread thread : threads){
         try {
-                thread.join(); //espera cada thread terminar
+                thread.join(); //espera cada thread terminar a execução para depois finalizar o processo
             } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             System.out.println(" A simulação foi interrompida.");
